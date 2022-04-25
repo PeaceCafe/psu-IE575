@@ -472,12 +472,9 @@ def ROCs(df, n):
     df.head()
     return df 
 
-def roc_plot(df,i):
+def roc_plot(data,i):
     n=2
-    try:
-        df = data[['Close']].copy()
-    except:
-        df = data["Close"]
+    df = pd.DataFrame([data.Close]).transpose()
     # Compute the n-period Rate of Change for Close column
     Rocs = ROCs(df,n)
     Rocs.head()
@@ -496,17 +493,14 @@ def roc_plot(df,i):
     plt.ylabel('ROC values')
     plt.grid(True)
     plt.setp(plt.gca().get_xticklabels(), rotation=30)
-
+    st.plotly_chart(fig)
 
 
 #BBands
 def BB(data,i):
     window=20
     nstd =2
-    try:
-        df = data[['Close']].copy()
-    except:
-        df = data["Close"]
+    df = pd.DataFrame([data.Close]).transpose()
 
     #Calculating sma
     sma = df.rolling(window=20).mean().dropna()
@@ -569,7 +563,7 @@ def BB(data,i):
             xaxis = {'title':"Time"},
             yaxis = {'title':"Price"}
             )
-    fig.show()     
+    st.plotly_chart(fig)     
 
 if var:
     if ('Bitcoin' in option):
